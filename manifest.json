@@ -11,8 +11,7 @@
     "default_popup": "popup.html",
     "default_icon": "icon.png"
   },
-  "permissions": ["tabs"],
-  "host_permissions": ["<all_urls>"],
+  "permissions": ["activeTab"],
   "sandbox": {
     "pages": ["viewer.html"]
   },
