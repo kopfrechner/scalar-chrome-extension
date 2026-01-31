@@ -1,9 +1,23 @@
-document.getElementById('openBtn').addEventListener('click', () => {
-  const url = document.getElementById('specUrl').value;
+// Function to open the viewer with a specific URL
+function openViewer(url) {
   if (url) {
-    // Opens a new tab with our viewer.html and the Spec URL
     chrome.tabs.create({
       url: `viewer.html?spec=${encodeURIComponent(url)}`
     });
   }
+}
+
+// Handle "Open Current Tab" button
+document.getElementById('openCurrentBtn').addEventListener('click', () => {
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    if (tabs && tabs[0] && tabs[0].url) {
+      openViewer(tabs[0].url);
+    }
+  });
+});
+
+// Handle Manual "Open" button
+document.getElementById('openBtn').addEventListener('click', () => {
+  const url = document.getElementById('specUrl').value;
+  openViewer(url);
 });
