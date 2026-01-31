@@ -1,31 +1,50 @@
 # Scalar OpenAPI Viewer
 
-A lightweight Chrome Extension to view any OpenAPI/Swagger specification file using the beautiful [Scalar](https://scalar.com) API reference viewer.
+**Transform raw OpenAPI/Swagger files into beautiful, interactive documentation in one click.**
+
+![Scalar OpenAPI Viewer](docs/images/scalar-view.jpg)
+
+## Why use this extension?
+
+Developers and testers often encounter raw OpenAPI (Swagger) files that look like this:
+
+![Raw JSON](docs/images/raw-json.jpg)
+
+Reading this is painful. **Scalar OpenAPI Viewer** instantly renders it into a modern, navigable, and interactive documentation site directly in your browser.
 
 ## Features
 
-- **Instant Rendering:** Open any OpenAPI JSON/YAML URL directly in Scalar.
-- **Dark/Light Mode:** Automatically adapts to your system theme.
-- **Secure:** Runs entirely in your browser using a sandboxed environment. No data is sent to third-party servers (except fetching the spec you provide).
+*   ✨ **Instant Visualization:** Turn `.json` or `.yaml` URLs into a full API reference.
+*   🌗 **Dark & Light Mode:** Automatically matches your system theme.
+*   🔒 **Privacy First:** Runs in a secure sandbox. Your API specs are never sent to our servers.
+*   ⚡ **Smart Detection:** Automatically detects if you are viewing an OpenAPI file and lets you visualize it with one click.
 
 ## How to use
 
-1. Click the extension icon in your toolbar.
-2. Paste the URL of an OpenAPI specification (e.g., `https://petstore.swagger.io/v2/swagger.json`).
-3. Click "Open".
-4. Enjoy the documentation!
+### Option 1: Visualize Current Page (Recommended)
+1.  Navigate to any URL ending in `.json`, `.yaml`, or `.yml` (e.g., a raw GitHub file or an API endpoint).
+2.  Click the extension icon in your toolbar.
+3.  Click **"Visualize Current Page"**.
 
-## Development
+![Extension Popup](docs/images/popup.jpg)
 
-This extension uses a "Sandboxed Page" architecture to securely load the Scalar CDN.
+### Option 2: Paste URL manually
+1.  Click the extension icon.
+2.  Paste any public OpenAPI URL into the input field.
+3.  Click **"Visualize"**.
 
-### Build
+## Installation
 
-To create a zip bundle for the Chrome Web Store:
-1. Push to `main`.
-2. Download the artifact from the GitHub Actions tab.
+[Download from Chrome Web Store](https://chrome.google.com/webstore/detail/YOUR_EXTENSION_ID) _(Coming soon)_
 
-Alternatively, zip the files manually:
-```bash
-zip -r extension.zip . -x "*.git*"
-```
+## Manual Installation (Developer Mode)
+
+1.  Clone this repository.
+2.  Open Chrome and go to `chrome://extensions/`.
+3.  Enable **"Developer mode"** in the top right.
+4.  Click **"Load unpacked"**.
+5.  Select the folder where you cloned this repository.
+
+---
+
+_Powered by [Scalar](https://scalar.com) - The modern API platform._
