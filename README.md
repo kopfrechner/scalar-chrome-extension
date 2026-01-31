@@ -35,7 +35,7 @@ Reading this is painful. **Scalar OpenAPI Viewer** instantly renders it into a m
 
 ## Installation
 
-[Download from Chrome Web Store](https://chrome.google.com/webstore/detail/YOUR_EXTENSION_ID) _(Coming soon)_
+[Download from Chrome Web Store](https://chrome.google.com/webstore/detail/enljnjkaijiflghcdkhgoimoeecifbdh) _(Review pending)_
 
 ## Manual Installation (Developer Mode)
 
