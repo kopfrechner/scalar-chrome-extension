@@ -2,13 +2,13 @@
 
 **Transform raw OpenAPI/Swagger files into beautiful, interactive documentation in one click.**
 
-![Scalar OpenAPI Viewer](docs/images/scalar-view.jpg)
+![Scalar OpenAPI Viewer](docs/images/scalar-view.webp)
 
 ## Why use this extension?
 
 Developers and testers often encounter raw OpenAPI (Swagger) files that look like this:
 
-![Raw JSON](docs/images/raw-json.jpg)
+![Raw JSON](docs/images/raw-json.webp)
 
 Reading this is painful. **Scalar OpenAPI Viewer** instantly renders it into a modern, navigable, and interactive documentation site directly in your browser.
 
@@ -26,7 +26,7 @@ Reading this is painful. **Scalar OpenAPI Viewer** instantly renders it into a m
 2.  Click the extension icon in your toolbar.
 3.  Click **"Visualize Current Page"**.
 
-![Extension Popup](docs/images/popup.jpg)
+![Extension Popup](docs/images/popup.webp)
 
 ### Option 2: Paste URL manually
 1.  Click the extension icon.
