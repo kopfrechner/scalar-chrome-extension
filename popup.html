@@ -1,6 +1,56 @@
 <!DOCTYPE html>
 <html>
-<body style="width: 300px; padding: 10px;">
+<head>
+  <style>
+    body {
+      width: 300px;
+      padding: 10px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    
+    /* Default (Light) Theme */
+    body {
+      background-color: #ffffff;
+      color: #333333;
+    }
+    input, button {
+      background-color: #f0f0f0;
+      color: #333333;
+      border: 1px solid #cccccc;
+      padding: 8px;
+      border-radius: 4px;
+      box-sizing: border-box; /* Ensures padding doesn't affect width */
+    }
+    input::placeholder {
+      color: #888888;
+    }
+    button:hover {
+      background-color: #e0e0e0;
+      cursor: pointer;
+    }
+
+    /* Dark Theme */
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #202124;
+        color: #e8eaed;
+      }
+      input, button {
+        background-color: #292a2d;
+        color: #e8eaed;
+        border: 1px solid #5f6368;
+      }
+      input::placeholder {
+        color: #9aa0a6;
+      }
+      button:hover {
+        background-color: #3c4043;
+      }
+    }
+  </style>
+</head>
+<body>
   <input type="text" id="specUrl" placeholder="OpenAPI Spec URL" style="width: 100%;">
   <button id="openBtn" style="margin-top: 10px; width: 100%;">Open</button>
   <script src="popup.js"></script>
