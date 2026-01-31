@@ -13,7 +13,11 @@
   },
   "permissions": ["tabs"],
   "host_permissions": ["<all_urls>"],
+  "sandbox": {
+    "pages": ["viewer.html"]
+  },
   "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'; connect-src *; style-src 'self' 'unsafe-inline' *; font-src 'self' * data:;"
+    "extension_pages": "script-src 'self'; object-src 'self'; connect-src *; style-src 'self' 'unsafe-inline' *; font-src 'self' * data:;",
+    "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; object-src 'self';"
   }
 }
