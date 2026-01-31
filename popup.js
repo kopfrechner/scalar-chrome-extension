@@ -42,3 +42,8 @@ document.getElementById('openBtn').addEventListener('click', () => {
   const url = document.getElementById('specUrl').value;
   openViewer(url);
 });
+
+// Handle home link
+document.getElementById('homeLink').addEventListener('click', () => {
+  chrome.tabs.create({ url: 'https://kopfarbeit.dev' });
+});

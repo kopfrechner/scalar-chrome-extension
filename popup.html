@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
   <style>
     body {
       width: 300px;
@@ -74,6 +75,22 @@
       margin-left: 10px;
     }
 
+    /* Footer */
+    .footer {
+      margin-top: 15px;
+      text-align: center;
+      font-size: 11px;
+      color: #888;
+    }
+    .footer a {
+      color: #8E4EC6;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
     /* Dark Theme */
     @media (prefers-color-scheme: dark) {
       body {
@@ -106,6 +123,9 @@
       .divider::before, .divider::after {
         border-bottom: 1px solid #5f6368;
       }
+      .footer a {
+        color: #b388eb;
+      }
     }
   </style>
 </head>
@@ -116,6 +136,10 @@
   
   <input type="text" id="specUrl" placeholder="Paste OpenAPI / Swagger URL">
   <button id="openBtn" class="btn-secondary">Visualize</button>
+  
+  <div class="footer">
+    Made with 💜 by <a href="#" id="homeLink">kopfarbeit.dev</a>
+  </div>
   
   <script src="popup.js"></script>
 </body>
