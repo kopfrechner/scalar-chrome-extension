@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "Scalar OpenAPI Viewer",
+  "version": "1.0",
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": ["tabs"],
+  "host_permissions": ["<all_urls>"],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; connect-src *; style-src 'self' 'unsafe-inline' *; font-src 'self' * data:;"
+  }
+}
