@@ -13,12 +13,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Create ZIP bundle
-        run: |
-          zip -r scalar-chrome-extension.zip . -x "*.git*" ".github*" ".DS_Store" "*.gemini*"
-
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: scalar-chrome-extension-zip
-          path: scalar-chrome-extension.zip
+          name: scalar-chrome-extension
+          path: |
+            .
+            !./.git
+            !./.github
+            !./.gemini*
+            !./*.zip
