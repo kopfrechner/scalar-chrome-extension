@@ -1,6 +1,6 @@
 # Scalar OpenAPI Viewer
 
-**Transform raw OpenAPI/Swagger files into beautiful, interactive documentation in one click.**
+Transform raw OpenAPI/Swagger files into beautiful, interactive documentation in one click with the Scalar OpenAPI Viewer [Google Chrome extension](https://chromewebstore.google.com/detail/enljnjkaijiflghcdkhgoimoeecifbdh).
 
 ![Scalar OpenAPI Viewer](docs/images/scalar-view.webp)
 
