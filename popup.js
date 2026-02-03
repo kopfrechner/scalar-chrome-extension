@@ -56,11 +56,10 @@ document.getElementById('fileInput').addEventListener('change', (e) => {
   const reader = new FileReader();
   reader.onload = (event) => {
     const content = event.target.result;
-    // Store content and open viewer
-    chrome.storage.local.set({ 'scalar_spec_content': content }, () => {
-      chrome.tabs.create({
-        url: `viewer.html?src=storage`
-      });
+    // Pass content via URL param (Extension URL limit is generous)
+    const encodedContent = encodeURIComponent(content);
+    chrome.tabs.create({
+      url: `viewer.html?src=data&content=${encodedContent}&mode=direct`
     });
   };
   reader.readAsText(file);
