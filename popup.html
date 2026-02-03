@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="UTF-8">
   <style>
@@ -9,9 +10,10 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       transition: background-color 0.3s, color 0.3s;
     }
-    
+
     /* Shared Element Styles */
-    input, button {
+    input,
+    button {
       padding: 10px;
       border-radius: 6px;
       box-sizing: border-box;
@@ -19,10 +21,12 @@
       font-size: 14px;
       margin-bottom: 8px;
     }
+
     input {
       cursor: text;
       border: 1px solid #cccccc;
     }
+
     button {
       cursor: pointer;
       font-weight: 500;
@@ -35,9 +39,11 @@
       color: white;
       transition: background-color 0.2s;
     }
+
     .btn-primary:hover {
       background-color: #7a3fb0;
     }
+
     .btn-primary:disabled {
       background-color: #cccccc;
       color: #888888;
@@ -50,6 +56,7 @@
       color: #333333;
       border: 1px solid #cccccc;
     }
+
     .btn-secondary:hover {
       background-color: #e0e0e0;
     }
@@ -63,14 +70,18 @@
       color: #888;
       font-size: 12px;
     }
-    .divider::before, .divider::after {
+
+    .divider::before,
+    .divider::after {
       content: '';
       flex: 1;
       border-bottom: 1px solid #ddd;
     }
+
     .divider::before {
       margin-right: 10px;
     }
+
     .divider::after {
       margin-left: 10px;
     }
@@ -82,13 +93,105 @@
       font-size: 11px;
       color: #888;
     }
+
     .footer a {
       color: #8E4EC6;
       text-decoration: none;
       font-weight: 500;
     }
+
     .footer a:hover {
       text-decoration: underline;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    .toggle-label-text {
+      text-align: center;
+      font-size: 11px;
+      color: #666;
+      margin-bottom: 4px;
+      margin-top: 12px;
+      font-weight: 500;
+    }
+
+    /* Toggle Switch Styles */
+    .toggle-container {
+      margin: 15px auto;
+      width: 100%;
+      max-width: 160px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .toggle-input {
+      display: none;
+    }
+
+    .toggle-label {
+      position: relative;
+      display: flex;
+      width: 100%;
+      height: 28px;
+      background-color: #9f54e6;
+      /* Purple base */
+      border-radius: 14px;
+      cursor: pointer;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2px;
+      box-sizing: border-box;
+      user-select: none;
+    }
+
+    .toggle-pill {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: calc(50% - 2px);
+      height: 24px;
+      background-color: white;
+      border-radius: 12px;
+      transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+      z-index: 1;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .toggle-text {
+      flex: 1;
+      text-align: center;
+      z-index: 2;
+      font-size: 11px;
+      font-weight: 600;
+      transition: color 0.3s;
+      color: white;
+      /* Default inactive color */
+    }
+
+    /* State: Checked (Proxy active) */
+    .toggle-input:checked+.toggle-label .toggle-pill {
+      transform: translateX(100%);
+    }
+
+    /* Text Colors Logic */
+    /* When unchecked (Local): Left is active (Purple), Right is inactive (White) */
+    .toggle-input:not(:checked)+.toggle-label .text-left {
+      color: #9f54e6;
+    }
+
+    .toggle-input:not(:checked)+.toggle-label .text-right {
+      color: white;
+    }
+
+    /* When checked (Proxy): Left is inactive (White), Right is active (Purple) */
+    .toggle-input:checked+.toggle-label .text-left {
+      color: white;
+    }
+
+    .toggle-input:checked+.toggle-label .text-right {
+      color: #9f54e6;
     }
 
     /* Dark Theme */
@@ -97,50 +200,72 @@
         background-color: #202124;
         color: #e8eaed;
       }
+
       input {
         background-color: #292a2d;
         color: #e8eaed;
         border: 1px solid #5f6368;
       }
+
       input::placeholder {
         color: #9aa0a6;
       }
+
       .btn-secondary {
         background-color: #292a2d;
         color: #e8eaed;
         border: 1px solid #5f6368;
       }
+
       .btn-secondary:hover {
         background-color: #3c4043;
       }
+
       .btn-primary:disabled {
         background-color: #3c4043;
         color: #5f6368;
       }
+
       .divider {
         color: #9aa0a6;
       }
-      .divider::before, .divider::after {
+
+      .divider::before,
+      .divider::after {
         border-bottom: 1px solid #5f6368;
       }
+
       .footer a {
         color: #b388eb;
       }
     }
   </style>
 </head>
+
 <body>
   <button id="openCurrentBtn" class="btn-primary">Visualize Current Page</button>
-  
+
+  <div class="toggle-label-text">Spec Location</div>
+  <div class="toggle-container">
+    <input type="checkbox" id="proxyMode" class="toggle-input">
+    <label for="proxyMode" class="toggle-label"
+      title="Choose 'Local' for localhost/intranet specs, 'Public' for internet-accessible specs (uses proxy)">
+      <div class="toggle-pill"></div>
+      <span class="toggle-text text-left">Local</span>
+      <span class="toggle-text text-right">Public</span>
+    </label>
+  </div>
+
   <div class="divider">OR</div>
-  
-  <input type="text" id="specUrl" placeholder="Paste OpenAPI / Swagger URL">
-  <button id="openBtn" class="btn-secondary">Visualize</button>
-  
+
+  <input type="file" id="fileInput" style="display: none" accept=".json,.yaml,.yml">
+  <button id="fileBtn" class="btn-secondary">Load from File</button>
+
   <div class="footer">
     Made with 💜 by <a href="#" id="homeLink">kopfarbeit.dev</a>
   </div>
-  
+
   <script src="popup.js"></script>
 </body>
+
 </html>
