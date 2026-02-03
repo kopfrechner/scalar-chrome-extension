@@ -20,7 +20,7 @@ try {
 // Read the URL from the browser parameters
 const params = new URLSearchParams(window.location.search);
 const specUrl = params.get('spec');
-const MODE_KEY = 'scalar_mode';
+const MODE_PARAM = 'mode';
 const MODES = {
   DIRECT: 'direct',
   PROXY: 'proxy'
@@ -28,14 +28,17 @@ const MODES = {
 
 // Function to get current mode (default: DIRECT)
 function getMode() {
-  return localStorage.getItem(MODE_KEY) || MODES.DIRECT;
+  return params.get(MODE_PARAM) || MODES.DIRECT;
 }
 
 // Function to toggle mode
 function toggleMode() {
   const current = getMode();
   const next = current === MODES.DIRECT ? MODES.PROXY : MODES.DIRECT;
-  localStorage.setItem(MODE_KEY, next);
+
+  // Update URL and reload
+  params.set(MODE_PARAM, next);
+  window.history.replaceState({}, '', `${window.location.pathname}?${params.toString()}`);
   window.location.reload();
 }
 
