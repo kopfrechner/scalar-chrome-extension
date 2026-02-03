@@ -32,11 +32,7 @@ document.getElementById('openCurrentBtn').addEventListener('click', () => {
   });
 });
 
-// Handle Manual "Open" button
-document.getElementById('openBtn').addEventListener('click', () => {
-  const url = document.getElementById('specUrl').value;
-  openViewer(url);
-});
+
 
 // Handle home link
 document.getElementById('homeLink').addEventListener('click', () => {
