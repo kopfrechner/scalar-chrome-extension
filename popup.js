@@ -2,7 +2,7 @@
 function openViewer(url) {
   if (url) {
     chrome.tabs.create({
-      url: `viewer.html?spec=${encodeURIComponent(url)}`
+      url: `viewer.html?spec=${encodeURIComponent(url)}&mode=direct`
     });
   }
 }
