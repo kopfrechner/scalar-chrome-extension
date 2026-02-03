@@ -32,7 +32,42 @@ function getMode() {
 }
 
 // Initialize Scalar based on mode
+// Initialize Scalar based on mode
 function initScalar() {
+  const src = params.get('src');
+
+  // Handle Data Content (File Upload)
+  if (src === 'data') {
+    const encodedContent = params.get('content');
+    if (encodedContent) {
+      try {
+        const content = decodeURIComponent(encodedContent);
+
+        // Create container
+        const div = document.createElement('div');
+        div.id = 'scalar';
+        document.body.appendChild(div);
+
+        // Wait for Scalar library
+        const check = setInterval(() => {
+          if (window.Scalar) {
+            clearInterval(check);
+            Scalar.createApiReference('#scalar', {
+              spec: { content: content },
+              proxyUrl: 'https://proxy.scalar.com', // Optional for local content
+            });
+          }
+        }, 100);
+      } catch (e) {
+        document.body.innerHTML = `<div style="padding: 20px; font-family: sans-serif;">Error parsing content: ${e.message}</div>`;
+      }
+    } else {
+      document.body.innerHTML = '<div style="padding: 20px; font-family: sans-serif;">Error: No content provided in URL.</div>';
+    }
+    return;
+  }
+
+  // Handle Standard URL Input
   if (!specUrl) {
     document.body.insertAdjacentHTML('afterbegin', '<div style="padding: 20px; font-family: sans-serif;">No OpenAPI Spec URL provided.</div>');
     return;
@@ -45,7 +80,6 @@ function initScalar() {
     const script = document.createElement('script');
     script.id = 'api-reference';
     script.setAttribute('data-url', specUrl);
-    // data-proxy-url is NOT set here to avoid proxying
     document.body.appendChild(script);
   } else {
     // Proxy Mode: Use Scalar.createApiReference (Good for CORS)
@@ -53,7 +87,7 @@ function initScalar() {
     div.id = 'scalar';
     document.body.appendChild(div);
 
-    // Wait specifically for Scalar object if using CDN script at bottom
+    // Wait specifically for Scalar object
     if (window.Scalar) {
       Scalar.createApiReference('#scalar', {
         url: specUrl,
@@ -73,6 +107,3 @@ function initScalar() {
     }
   }
 }
-
-// Run immediately to ensure elements are present before the Scalar CDN script loads
-initScalar();

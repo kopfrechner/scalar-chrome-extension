@@ -42,3 +42,26 @@ document.getElementById('openBtn').addEventListener('click', () => {
 document.getElementById('homeLink').addEventListener('click', () => {
   chrome.tabs.create({ url: 'https://kopfarbeit.dev' });
 });
+
+// Handle "Load from File" button
+document.getElementById('fileBtn').addEventListener('click', () => {
+  document.getElementById('fileInput').click();
+});
+
+// Handle File Selection
+document.getElementById('fileInput').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    const content = event.target.result;
+    // Store content and open viewer
+    chrome.storage.local.set({ 'scalar_spec_content': content }, () => {
+      chrome.tabs.create({
+        url: `viewer.html?src=storage`
+      });
+    });
+  };
+  reader.readAsText(file);
+});
