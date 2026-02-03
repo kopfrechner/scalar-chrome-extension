@@ -31,38 +31,12 @@ function getMode() {
   return params.get(MODE_PARAM) || MODES.DIRECT;
 }
 
-// Function to toggle mode
-function toggleMode() {
-  const current = getMode();
-  const next = current === MODES.DIRECT ? MODES.PROXY : MODES.DIRECT;
-
-  // Update URL and reload
-  params.set(MODE_PARAM, next);
-  window.history.replaceState({}, '', `${window.location.pathname}?${params.toString()}`);
-  window.location.reload();
-}
-
-// Render the Toggle Button
-function renderToggleButton() {
-  const mode = getMode();
-  const btn = document.createElement('button');
-  btn.className = 'mode-toggle';
-  btn.textContent = mode === MODES.DIRECT ? 'Mode: Direct (Local)' : 'Mode: Proxy (CORS Fix)';
-  btn.title = mode === MODES.DIRECT
-    ? 'Switch to Proxy execution to fix CORS issues'
-    : 'Switch to Direct execution for Localhost specs';
-  btn.onclick = toggleMode;
-  document.body.appendChild(btn);
-}
-
 // Initialize Scalar based on mode
 function initScalar() {
   if (!specUrl) {
     document.body.insertAdjacentHTML('afterbegin', '<div style="padding: 20px; font-family: sans-serif;">No OpenAPI Spec URL provided.</div>');
     return;
   }
-
-  renderToggleButton();
 
   const mode = getMode();
 

@@ -1,11 +1,27 @@
 // Function to open the viewer with a specific URL
 function openViewer(url) {
   if (url) {
+    const useProxy = document.getElementById('proxyMode').checked;
+    const mode = useProxy ? 'proxy' : 'direct';
     chrome.tabs.create({
-      url: `viewer.html?spec=${encodeURIComponent(url)}&mode=direct`
+      url: `viewer.html?spec=${encodeURIComponent(url)}&mode=${mode}`
     });
   }
 }
+
+// Restore checkbox state
+const PROXY_MODE_KEY = 'scalar_proxy_mode';
+document.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem(PROXY_MODE_KEY);
+  if (saved === 'true') {
+    document.getElementById('proxyMode').checked = true;
+  }
+});
+
+// Save checkbox state
+document.getElementById('proxyMode').addEventListener('change', (e) => {
+  localStorage.setItem(PROXY_MODE_KEY, e.target.checked);
+});
 
 // Handle "Open Current Tab" button
 document.getElementById('openCurrentBtn').addEventListener('click', () => {
