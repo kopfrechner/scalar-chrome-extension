@@ -1,19 +1,42 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Scalar API Reference</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <style>
-      body {
-        margin: 0;
-      }
-    </style>
-  </head>
-  <body>
-    <script id="api-reference"></script>
 
-    <script src="viewer.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@scalar/api-reference"></script>
-  </body>
+<head>
+  <title>Scalar API Reference</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      margin: 0;
+    }
+
+    .mode-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 10000;
+      padding: 8px 12px;
+      background: #202020;
+      color: white;
+      border: 1px solid #333;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: sans-serif;
+      font-size: 12px;
+      opacity: 0.3;
+      transition: opacity 0.2s;
+    }
+
+    .mode-toggle:hover {
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Content injected by viewer.js -->
+  <script src="viewer.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@scalar/api-reference"></script>
+</body>
+
 </html>
