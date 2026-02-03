@@ -1,79 +1,102 @@
-// Fix for Sandbox: Mock localStorage to prevent SecurityError
-try {
-  window.localStorage;
-} catch (e) {
-  const store = {};
-  Object.defineProperty(window, 'localStorage', {
-    value: {
-      getItem: (key) => store[key] || null,
-      setItem: (key, value) => { store[key] = String(value); },
-      removeItem: (key) => { delete store[key]; },
-      clear: () => { for (let key in store) delete store[key]; },
-      key: (i) => Object.keys(store)[i] || null,
-      get length() { return Object.keys(store).length; }
-    },
-    writable: true,
-    configurable: true
-  });
-}
+/**
+ * viewer.js
+ * Handles initialization of the Scalar API Reference based on URL parameters.
+ */
 
-// Read the URL from the browser parameters
-const params = new URLSearchParams(window.location.search);
-const specUrl = params.get('spec');
+// Constants
 const MODE_PARAM = 'mode';
 const MODES = {
   DIRECT: 'direct',
   PROXY: 'proxy'
 };
 
-// Function to get current mode (default: DIRECT)
-function getMode() {
+// Polyfills
+function mockLocalStorage() {
+  try {
+    window.localStorage;
+  } catch (e) {
+    const store = {};
+    Object.defineProperty(window, 'localStorage', {
+      value: {
+        getItem: (key) => store[key] || null,
+        setItem: (key, value) => { store[key] = String(value); },
+        removeItem: (key) => { delete store[key]; },
+        clear: () => { for (let key in store) delete store[key]; },
+        key: (i) => Object.keys(store)[i] || null,
+        get length() { return Object.keys(store).length; }
+      },
+      writable: true,
+      configurable: true
+    });
+  }
+}
+
+// Helpers
+function getParams() {
+  return new URLSearchParams(window.location.search);
+}
+
+function getMode(params) {
   return params.get(MODE_PARAM) || MODES.DIRECT;
 }
 
-// Initialize Scalar based on mode
-// Initialize Scalar based on mode
-function initScalar() {
-  const src = params.get('src');
+function createContainer() {
+  const div = document.createElement('div');
+  div.id = 'scalar';
+  document.body.appendChild(div);
+  return div;
+}
 
-  // Handle Data Content (File Upload)
-  if (src === 'data') {
-    const encodedContent = params.get('content');
-    if (encodedContent) {
-      try {
-        const content = decodeURIComponent(encodedContent);
+function showError(message) {
+  document.body.innerHTML = `<div style="padding: 20px; font-family: sans-serif; color: #d32f2f;">${message}</div>`;
+}
 
-        // Create container
-        const div = document.createElement('div');
-        div.id = 'scalar';
-        document.body.appendChild(div);
-
-        // Wait for Scalar library
-        const check = setInterval(() => {
-          if (window.Scalar) {
-            clearInterval(check);
-            Scalar.createApiReference('#scalar', {
-              spec: { content: content },
-              proxyUrl: 'https://proxy.scalar.com', // Optional for local content
-            });
-          }
-        }, 100);
-      } catch (e) {
-        document.body.innerHTML = `<div style="padding: 20px; font-family: sans-serif;">Error parsing content: ${e.message}</div>`;
+/**
+ * Waits for the Scalar object to be available on window, then executes the callback.
+ */
+function waitForScalar(callback) {
+  if (window.Scalar) {
+    callback();
+  } else {
+    const check = setInterval(() => {
+      if (window.Scalar) {
+        clearInterval(check);
+        callback();
       }
-    } else {
-      document.body.innerHTML = '<div style="padding: 20px; font-family: sans-serif;">Error: No content provided in URL.</div>';
-    }
+    }, 100);
+  }
+}
+
+/**
+ * Handles 'Data' mode (content passed via URL param from File Upload).
+ */
+function handleDataMode(params) {
+  const encodedContent = params.get('content');
+  if (!encodedContent) {
+    showError('Error: No content provided in URL.');
     return;
   }
 
-  // Handle Standard URL Input
-  if (!specUrl) {
-    document.body.insertAdjacentHTML('afterbegin', '<div style="padding: 20px; font-family: sans-serif;">No OpenAPI Spec URL provided.</div>');
-    return;
-  }
+  try {
+    const content = decodeURIComponent(encodedContent);
+    createContainer();
 
-  const mode = getMode();
+    waitForScalar(() => {
+      Scalar.createApiReference('#scalar', {
+        spec: { content: content },
+        proxyUrl: 'https://proxy.scalar.com',
+      });
+    });
+  } catch (e) {
+    showError(`Error parsing content: ${e.message}`);
+  }
+}
+
+/**
+ * Handles 'URL' mode (Standard usage via spec URL).
+ */
+function handleUrlMode(params, specUrl) {
+  const mode = getMode(params);
 
   if (mode === MODES.DIRECT) {
     // Direct Mode: Use strict script tag (Good for Localhost)
@@ -83,30 +106,32 @@ function initScalar() {
     document.body.appendChild(script);
   } else {
     // Proxy Mode: Use Scalar.createApiReference (Good for CORS)
-    const div = document.createElement('div');
-    div.id = 'scalar';
-    document.body.appendChild(div);
+    createContainer();
 
-    // Wait specifically for Scalar object
-    if (window.Scalar) {
+    waitForScalar(() => {
       Scalar.createApiReference('#scalar', {
         url: specUrl,
         proxyUrl: 'https://proxy.scalar.com',
       });
-    } else {
-      // Fallback/Retry if script loads late
-      const check = setInterval(() => {
-        if (window.Scalar) {
-          clearInterval(check);
-          Scalar.createApiReference('#scalar', {
-            url: specUrl,
-            proxyUrl: 'https://proxy.scalar.com',
-          });
-        }
-      }, 100);
-    }
+    });
   }
 }
 
-// Run immediately to ensure elements are present before the Scalar CDN script loads
-initScalar();
+// Main Initialization
+function init() {
+  mockLocalStorage();
+  const params = getParams();
+  const src = params.get('src');
+  const specUrl = params.get('spec');
+
+  if (src === 'data') {
+    handleDataMode(params);
+  } else if (specUrl) {
+    handleUrlMode(params, specUrl);
+  } else {
+    showError('No OpenAPI Spec URL provided.');
+  }
+}
+
+// Execute
+init();
