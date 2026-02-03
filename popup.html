@@ -108,11 +108,20 @@
       text-decoration: underline;
     }
 
+    .toggle-label-text {
+      text-align: center;
+      font-size: 11px;
+      color: #666;
+      margin-bottom: 4px;
+      margin-top: 12px;
+      font-weight: 500;
+    }
+
     /* Toggle Switch Styles */
     .toggle-container {
       margin: 15px auto;
       width: 100%;
-      max-width: 200px;
+      max-width: 160px;
       display: flex;
       justify-content: center;
     }
@@ -125,26 +134,26 @@
       position: relative;
       display: flex;
       width: 100%;
-      height: 32px;
+      height: 28px;
       background-color: #9f54e6;
       /* Purple base */
-      border-radius: 16px;
+      border-radius: 14px;
       cursor: pointer;
       align-items: center;
       justify-content: space-between;
-      padding: 3px;
+      padding: 2px;
       box-sizing: border-box;
       user-select: none;
     }
 
     .toggle-pill {
       position: absolute;
-      top: 3px;
-      left: 3px;
-      width: calc(50% - 3px);
-      height: 26px;
+      top: 2px;
+      left: 2px;
+      width: calc(50% - 2px);
+      height: 24px;
       background-color: white;
-      border-radius: 13px;
+      border-radius: 12px;
       transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
       z-index: 1;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
@@ -154,7 +163,7 @@
       flex: 1;
       text-align: center;
       z-index: 2;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
       transition: color 0.3s;
       color: white;
@@ -241,12 +250,14 @@
   <input type="text" id="specUrl" placeholder="Paste OpenAPI / Swagger URL">
   <button id="openBtn" class="btn-secondary">Visualize</button>
 
+  <div class="toggle-label-text">Spec Location</div>
   <div class="toggle-container">
     <input type="checkbox" id="proxyMode" class="toggle-input">
-    <label for="proxyMode" class="toggle-label">
+    <label for="proxyMode" class="toggle-label"
+      title="Choose 'Local' for localhost/intranet specs, 'Public' for internet-accessible specs (uses proxy)">
       <div class="toggle-pill"></div>
       <span class="toggle-text text-left">Local</span>
-      <span class="toggle-text text-right">Proxy</span>
+      <span class="toggle-text text-right">Public</span>
     </label>
   </div>
 
