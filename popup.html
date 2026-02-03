@@ -104,17 +104,85 @@
       text-decoration: underline;
     }
 
-    .checkbox-wrapper {
-      margin: 10px 0;
-      display: flex;
-      align-items: center;
-      margin-left: 2px;
+    .footer a:hover {
+      text-decoration: underline;
     }
 
-    .checkbox-wrapper label {
-      margin-left: 8px;
-      font-size: 13px;
+    /* Toggle Switch Styles */
+    .toggle-container {
+      margin: 15px auto;
+      width: 100%;
+      max-width: 250px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .toggle-input {
+      display: none;
+    }
+
+    .toggle-label {
+      position: relative;
+      display: flex;
+      width: 100%;
+      height: 40px;
+      background-color: #9f54e6;
+      /* Purple base */
+      border-radius: 20px;
       cursor: pointer;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px;
+      box-sizing: border-box;
+      user-select: none;
+    }
+
+    .toggle-pill {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: calc(50% - 4px);
+      height: 32px;
+      background-color: white;
+      border-radius: 16px;
+      transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+      z-index: 1;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .toggle-text {
+      flex: 1;
+      text-align: center;
+      z-index: 2;
+      font-size: 14px;
+      font-weight: 600;
+      transition: color 0.3s;
+      color: white;
+      /* Default inactive color */
+    }
+
+    /* State: Checked (Proxy active) */
+    .toggle-input:checked+.toggle-label .toggle-pill {
+      transform: translateX(100%);
+    }
+
+    /* Text Colors Logic */
+    /* When unchecked (Local): Left is active (Purple), Right is inactive (White) */
+    .toggle-input:not(:checked)+.toggle-label .text-left {
+      color: #9f54e6;
+    }
+
+    .toggle-input:not(:checked)+.toggle-label .text-right {
+      color: white;
+    }
+
+    /* When checked (Proxy): Left is inactive (White), Right is active (Purple) */
+    .toggle-input:checked+.toggle-label .text-left {
+      color: white;
+    }
+
+    .toggle-input:checked+.toggle-label .text-right {
+      color: #9f54e6;
     }
 
     /* Dark Theme */
@@ -173,9 +241,13 @@
   <input type="text" id="specUrl" placeholder="Paste OpenAPI / Swagger URL">
   <button id="openBtn" class="btn-secondary">Visualize</button>
 
-  <div class="checkbox-wrapper">
-    <input type="checkbox" id="proxyMode">
-    <label for="proxyMode" title="Use proxy to bypass CORS restrictions">Use Proxy (Fix CORS)</label>
+  <div class="toggle-container">
+    <input type="checkbox" id="proxyMode" class="toggle-input">
+    <label for="proxyMode" class="toggle-label">
+      <div class="toggle-pill"></div>
+      <span class="toggle-text text-left">Local</span>
+      <span class="toggle-text text-right">Proxy</span>
+    </label>
   </div>
 
   <div class="footer">
