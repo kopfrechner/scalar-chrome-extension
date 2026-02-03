@@ -97,4 +97,5 @@ function initScalar() {
   }
 }
 
-window.onload = initScalar;
+// Run immediately to ensure elements are present before the Scalar CDN script loads
+initScalar();
