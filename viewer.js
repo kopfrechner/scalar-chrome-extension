@@ -17,20 +17,13 @@ try {
   });
 }
 
-// Function to initialize Scalar
-function initScalar() {
-  const params = new URLSearchParams(window.location.search);
-  const specUrl = params.get('spec');
+// Read the URL from the browser parameters
+const params = new URLSearchParams(window.location.search);
+const specUrl = params.get('spec');
 
-  if (specUrl && window.Scalar) {
-    Scalar.createApiReference('#scalar', {
-      url: specUrl,
-      proxyUrl: 'https://proxy.scalar.com', // Added proxy support as recommended
-    });
-  } else if (!specUrl) {
-    document.body.innerHTML = '<div style="padding: 20px; font-family: sans-serif;">No OpenAPI Spec URL provided.</div>';
+if (specUrl) {
+  const apiReference = document.getElementById('api-reference');
+  if (apiReference) {
+    apiReference.setAttribute('data-url', specUrl);
   }
 }
-
-// Wait for the Scalar library to load
-window.onload = initScalar;
