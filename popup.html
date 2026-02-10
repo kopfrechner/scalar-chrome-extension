@@ -144,29 +144,31 @@
       display: flex;
       width: 100%;
       height: 36px;
-      background-color: white;
+      background-color: transparent; /* Transparent to show body bg */
       border: 2px solid var(--ink);
       box-shadow: 4px 4px 0 var(--ink);
       cursor: pointer;
       align-items: center;
       justify-content: space-between;
-      padding: 2px; /* Container padding */
+      /* Removed padding to align pill perfectly */
+      padding: 0; 
       box-sizing: border-box;
       user-select: none;
+      overflow: hidden; /* Ensure pill doesn't spill if slightly off */
     }
 
     .toggle-pill {
       position: absolute;
-      top: 2px;
-      left: 2px;
-      /* Exactly half minus padding (2px on each side = 4px total space to share? No, simple math) */
-      /* Width = (ContainerWidth - 4px padding) / 2 */
-      width: calc(50% - 2px); 
-      height: 28px;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 100%;
       background-color: var(--zest);
-      border: 2px solid var(--ink);
+      /* Add a right border to separate from the other side */
+      border-right: 2px solid var(--ink); 
       transition: transform 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
       z-index: 1;
+      box-sizing: border-box;
     }
 
     .toggle-text {
@@ -177,20 +179,23 @@
       font-weight: 800;
       text-transform: uppercase;
       color: var(--ink);
+      position: relative; 
     }
 
     /* State: Checked (Proxy active) */
     .toggle-input:checked+.toggle-label .toggle-pill {
-      /* Move by 100% of its own width */
       transform: translateX(100%);
+      border-right: none;
+      border-left: 2px solid var(--ink);
     }
 
     /* Dark Theme */
     @media (prefers-color-scheme: dark) {
       :root {
         --background: #050505;
-        --foreground: #daff00;
-        --ink: #ffffff; /* Invert ink for dark mode borders */
+        --foreground: #ffffff; /* White text for better readability */
+        --ink: #ffffff; /* White borders for cleaner look */
+        --shadow-color: #ffffff;
       }
 
       body {
@@ -199,34 +204,31 @@
       }
 
       button {
-        border-color: var(--foreground);
-        box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--foreground);
-        color: #050505;
+        border-color: var(--ink);
+        box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--ink);
+        color: var(--background); /* Default text on buttons is black/dark */
       }
       
       button:active:not(:disabled) {
-        box-shadow: 2px 2px 0 var(--foreground);
+        box-shadow: 2px 2px 0 var(--ink);
       }
 
-      /* Dark Mode adjustments for Primary Button (Outline Style) */
+      /* Primary: Neon BG, Black Text */
       .btn-primary {
-        background-color: transparent;
-        color: var(--zest);
-        border-color: var(--zest);
-        box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--zest);
+        background-color: var(--zest);
+        color: #000000;
+        border-color: var(--ink); /* White border looks sharp */
       }
 
       .btn-primary:hover {
-        background-color: var(--zest);
-        color: #000000;
-        /* Keep shadow or shift it? Standard hover effect will apply translate */
+        background-color: #e6ff66; /* Lighter neon on hover */
       }
 
-      /* Secondary stays dark */
+      /* Secondary: Transparent BG, White Text, White Border */
       .btn-secondary {
-        background-color: #171717;
-        color: var(--zest);
-        border-color: var(--zest);
+        background-color: transparent;
+        color: var(--foreground);
+        border-color: var(--ink);
       }
       
       .btn-secondary:hover {
@@ -234,41 +236,43 @@
       }
 
       .divider {
-        color: var(--zest);
+        color: var(--ink);
       }
       
       .divider::before,
       .divider::after {
-        border-color: var(--zest);
+        border-color: var(--ink);
       }
 
       .footer {
-        color: #888;
+        color: #aaa;
       }
 
       .footer a {
         color: #000000;
         background-color: var(--zest);
-        border-color: var(--zest);
+        border-color: var(--ink);
       }
       
       /* Toggle Dark Mode adjustments */
       .toggle-label {
-        background-color: #171717;
-        border-color: var(--zest);
-        box-shadow: 4px 4px 0 var(--zest);
+        background-color: transparent;
+        border-color: var(--ink);
+        box-shadow: 4px 4px 0 var(--ink);
       }
       
       .toggle-pill {
         background-color: var(--zest);
-        border-color: #000000;
+        border-color: var(--ink); /* White border inside */
       }
       
+      /* Text inside toggle */
       .toggle-text {
-        color: var(--zest); /* Default text color */
+        color: var(--ink); /* White text on black side */
       }
       
-      /* When pill is under text, make text black for contrast */
+      /* Active side text (on top of Neon) should be Black */
+      /* This is tricky without JS, but we can try mix-blend-mode or strict targeting */
       .toggle-input:not(:checked)+.toggle-label .text-left {
         color: #000000;
       }
