@@ -150,7 +150,7 @@
       cursor: pointer;
       align-items: center;
       justify-content: space-between;
-      padding: 2px;
+      padding: 2px; /* Container padding */
       box-sizing: border-box;
       user-select: none;
     }
@@ -159,7 +159,9 @@
       position: absolute;
       top: 2px;
       left: 2px;
-      width: calc(50% - 4px);
+      /* Exactly half minus padding (2px on each side = 4px total space to share? No, simple math) */
+      /* Width = (ContainerWidth - 4px padding) / 2 */
+      width: calc(50% - 2px); 
       height: 28px;
       background-color: var(--zest);
       border: 2px solid var(--ink);
@@ -179,7 +181,8 @@
 
     /* State: Checked (Proxy active) */
     .toggle-input:checked+.toggle-label .toggle-pill {
-      transform: translateX(calc(100% + 4px));
+      /* Move by 100% of its own width */
+      transform: translateX(100%);
     }
 
     /* Dark Theme */
@@ -205,14 +208,25 @@
         box-shadow: 2px 2px 0 var(--foreground);
       }
 
+      /* Dark Mode adjustments for Primary Button (Outline Style) */
       .btn-primary {
-        background-color: var(--zest);
-        color: #000000;
+        background-color: transparent;
+        color: var(--zest);
+        border-color: var(--zest);
+        box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--zest);
       }
 
+      .btn-primary:hover {
+        background-color: var(--zest);
+        color: #000000;
+        /* Keep shadow or shift it? Standard hover effect will apply translate */
+      }
+
+      /* Secondary stays dark */
       .btn-secondary {
         background-color: #171717;
         color: var(--zest);
+        border-color: var(--zest);
       }
       
       .btn-secondary:hover {
