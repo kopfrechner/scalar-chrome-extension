@@ -36,7 +36,7 @@ document.getElementById('openCurrentBtn').addEventListener('click', () => {
 
 // Handle home link
 document.getElementById('homeLink').addEventListener('click', () => {
-  chrome.tabs.create({ url: 'https://kopfarbeit.dev' });
+  chrome.tabs.create({ url: 'https://sodazitron.dev' });
 });
 
 // Handle "Load from File" button

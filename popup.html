@@ -4,61 +4,68 @@
 <head>
   <meta charset="UTF-8">
   <style>
+    :root {
+      --zest: #daff00;
+      --ink: #000000;
+      --background: #fffdf5;
+      --foreground: #1a1a1a;
+      --border-width: 2px;
+      --shadow-offset: 4px;
+    }
+
     body {
       width: 300px;
-      padding: 12px;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      padding: 16px;
+      font-family: 'JetBrains Mono', -apple-system, monospace;
+      background-color: var(--background);
+      color: var(--foreground);
       transition: background-color 0.3s, color 0.3s;
     }
 
     /* Shared Element Styles */
-    input,
     button {
-      padding: 10px;
-      border-radius: 6px;
-      box-sizing: border-box;
+      padding: 12px;
+      border: var(--border-width) solid var(--ink);
+      box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--ink);
       width: 100%;
       font-size: 14px;
-      margin-bottom: 8px;
-    }
-
-    input {
-      cursor: text;
-      border: 1px solid #cccccc;
-    }
-
-    button {
+      font-weight: 700;
+      margin-bottom: 12px;
       cursor: pointer;
-      font-weight: 500;
-      border: none;
+      text-transform: uppercase;
+      transition: all 0.1s ease;
     }
 
-    /* Primary Button (Scalar Purple) */
+    button:active:not(:disabled) {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 var(--ink);
+    }
+
+    /* Primary Button (Soda Zest) */
     .btn-primary {
-      background-color: #8E4EC6;
-      color: white;
-      transition: background-color 0.2s;
+      background-color: var(--zest);
+      color: var(--ink);
     }
 
     .btn-primary:hover {
-      background-color: #7a3fb0;
+      background-color: #c8eb00;
     }
 
     .btn-primary:disabled {
       background-color: #cccccc;
-      color: #888888;
+      border-color: #888;
+      box-shadow: none;
       cursor: not-allowed;
     }
 
     /* Secondary Button */
     .btn-secondary {
-      background-color: #f0f0f0;
-      color: #333333;
-      border: 1px solid #cccccc;
+      background-color: white;
+      color: var(--ink);
     }
 
     .btn-secondary:hover {
-      background-color: #e0e0e0;
+      background-color: #f0f0f0;
     }
 
     /* Divider */
@@ -66,16 +73,18 @@
       display: flex;
       align-items: center;
       text-align: center;
-      margin: 15px 0;
-      color: #888;
+      margin: 20px 0;
+      color: var(--ink);
+      font-weight: 700;
       font-size: 12px;
+      text-transform: uppercase;
     }
 
     .divider::before,
     .divider::after {
       content: '';
       flex: 1;
-      border-bottom: 1px solid #ddd;
+      border-bottom: 2px solid var(--ink);
     }
 
     .divider::before {
@@ -88,40 +97,40 @@
 
     /* Footer */
     .footer {
-      margin-top: 15px;
+      margin-top: 20px;
       text-align: center;
       font-size: 11px;
-      color: #888;
-    }
-
-    .footer a {
-      color: #8E4EC6;
-      text-decoration: none;
+      color: var(--ink);
       font-weight: 500;
     }
 
-    .footer a:hover {
-      text-decoration: underline;
+    .footer a {
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 800;
+      background-color: var(--zest);
+      padding: 2px 4px;
+      border: 1px solid var(--ink);
     }
 
     .footer a:hover {
-      text-decoration: underline;
+      box-shadow: 2px 2px 0 var(--ink);
     }
 
     .toggle-label-text {
       text-align: center;
       font-size: 11px;
-      color: #666;
-      margin-bottom: 4px;
-      margin-top: 12px;
-      font-weight: 500;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      margin-top: 16px;
     }
 
-    /* Toggle Switch Styles */
+    /* Toggle Switch Styles - Neo Brutalist */
     .toggle-container {
-      margin: 15px auto;
+      margin: 10px auto;
       width: 100%;
-      max-width: 160px;
+      max-width: 180px;
       display: flex;
       justify-content: center;
     }
@@ -134,10 +143,10 @@
       position: relative;
       display: flex;
       width: 100%;
-      height: 28px;
-      background-color: #9f54e6;
-      /* Purple base */
-      border-radius: 14px;
+      height: 36px;
+      background-color: white;
+      border: 2px solid var(--ink);
+      box-shadow: 4px 4px 0 var(--ink);
       cursor: pointer;
       align-items: center;
       justify-content: space-between;
@@ -150,13 +159,12 @@
       position: absolute;
       top: 2px;
       left: 2px;
-      width: calc(50% - 2px);
-      height: 24px;
-      background-color: white;
-      border-radius: 12px;
-      transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+      width: calc(50% - 4px);
+      height: 28px;
+      background-color: var(--zest);
+      border: 2px solid var(--ink);
+      transition: transform 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
       z-index: 1;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     }
 
     .toggle-text {
@@ -164,79 +172,95 @@
       text-align: center;
       z-index: 2;
       font-size: 11px;
-      font-weight: 600;
-      transition: color 0.3s;
-      color: white;
-      /* Default inactive color */
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--ink);
     }
 
     /* State: Checked (Proxy active) */
     .toggle-input:checked+.toggle-label .toggle-pill {
-      transform: translateX(100%);
-    }
-
-    /* Text Colors Logic */
-    /* When unchecked (Local): Left is active (Purple), Right is inactive (White) */
-    .toggle-input:not(:checked)+.toggle-label .text-left {
-      color: #9f54e6;
-    }
-
-    .toggle-input:not(:checked)+.toggle-label .text-right {
-      color: white;
-    }
-
-    /* When checked (Proxy): Left is inactive (White), Right is active (Purple) */
-    .toggle-input:checked+.toggle-label .text-left {
-      color: white;
-    }
-
-    .toggle-input:checked+.toggle-label .text-right {
-      color: #9f54e6;
+      transform: translateX(calc(100% + 4px));
     }
 
     /* Dark Theme */
     @media (prefers-color-scheme: dark) {
+      :root {
+        --background: #050505;
+        --foreground: #daff00;
+        --ink: #ffffff; /* Invert ink for dark mode borders */
+      }
+
       body {
-        background-color: #202124;
-        color: #e8eaed;
+        background-color: var(--background);
+        color: var(--foreground);
       }
 
-      input {
-        background-color: #292a2d;
-        color: #e8eaed;
-        border: 1px solid #5f6368;
+      button {
+        border-color: var(--foreground);
+        box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--foreground);
+        color: #050505;
+      }
+      
+      button:active:not(:disabled) {
+        box-shadow: 2px 2px 0 var(--foreground);
       }
 
-      input::placeholder {
-        color: #9aa0a6;
+      .btn-primary {
+        background-color: var(--zest);
+        color: #000000;
       }
 
       .btn-secondary {
-        background-color: #292a2d;
-        color: #e8eaed;
-        border: 1px solid #5f6368;
+        background-color: #171717;
+        color: var(--zest);
       }
-
+      
       .btn-secondary:hover {
-        background-color: #3c4043;
-      }
-
-      .btn-primary:disabled {
-        background-color: #3c4043;
-        color: #5f6368;
+        background-color: #222;
       }
 
       .divider {
-        color: #9aa0a6;
+        color: var(--zest);
       }
-
+      
       .divider::before,
       .divider::after {
-        border-bottom: 1px solid #5f6368;
+        border-color: var(--zest);
+      }
+
+      .footer {
+        color: #888;
       }
 
       .footer a {
-        color: #b388eb;
+        color: #000000;
+        background-color: var(--zest);
+        border-color: var(--zest);
+      }
+      
+      /* Toggle Dark Mode adjustments */
+      .toggle-label {
+        background-color: #171717;
+        border-color: var(--zest);
+        box-shadow: 4px 4px 0 var(--zest);
+      }
+      
+      .toggle-pill {
+        background-color: var(--zest);
+        border-color: #000000;
+      }
+      
+      .toggle-text {
+        color: var(--zest); /* Default text color */
+      }
+      
+      /* When pill is under text, make text black for contrast */
+      .toggle-input:not(:checked)+.toggle-label .text-left {
+        color: #000000;
+      }
+      
+      .toggle-input:checked+.toggle-label .text-right {
+        color: #000000;
       }
     }
   </style>
@@ -262,7 +286,7 @@
   <button id="fileBtn" class="btn-secondary">Load from File</button>
 
   <div class="footer">
-    Made with 💜 by <a href="#" id="homeLink">kopfarbeit.dev</a>
+    Made with 🍋 by <a href="#" id="homeLink">sodazitron.dev</a>
   </div>
 
   <script src="popup.js"></script>
