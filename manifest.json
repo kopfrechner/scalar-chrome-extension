@@ -11,12 +11,16 @@
     "default_popup": "popup.html",
     "default_icon": "icon.png"
   },
-  "permissions": ["activeTab"],
+  "permissions": [
+    "activeTab"
+  ],
   "sandbox": {
-    "pages": ["viewer.html"]
+    "pages": [
+      "viewer.html"
+    ]
   },
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'; connect-src *; style-src 'self' 'unsafe-inline' *; font-src 'self' * data:;",
-    "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; object-src 'self';"
+    "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self' 'unsafe-inline'; object-src 'self';"
   }
 }
